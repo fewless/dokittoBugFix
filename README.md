@@ -1,5 +1,6 @@
 # dokittoBugFix(ドキッとバグフィクス！)
 GGJ2020 Hakodate にて開発したゲーム
+Processing3にて作成
 
 # なにこれ
 マルコフ過程と恋愛を組み合わせた恋愛不成就を目指す謎ゲー
