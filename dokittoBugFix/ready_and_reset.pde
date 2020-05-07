@@ -42,7 +42,7 @@ void Reset(){
   classroom.add("授業に集中する");
   classroom.add("0.3");
   classroom.add("15");//SAN・恋回復
-  classroom.add("5");//恋心減少
+  classroom.add("10");//恋心減少
   school.add(classroom);
 
   club.clear();
@@ -51,8 +51,8 @@ void Reset(){
   club.add("0.2");
   club.add("ボールに注目する");
   club.add("0.8");
-  club.add("10");
   club.add("15");
+  club.add("10");
   school.add(club);
   
   lunchBreak.clear();
@@ -62,7 +62,7 @@ void Reset(){
   lunchBreak.add("一人で食べる");
   lunchBreak.add("0.4");
   lunchBreak.add("25");
-  lunchBreak.add("10");
+  lunchBreak.add("15");
   school.add(lunchBreak);
   
   afterSchool.clear();
@@ -81,8 +81,8 @@ void Reset(){
   beforeHomeRoom.add("0.5");
   beforeHomeRoom.add("予習をする");
   beforeHomeRoom.add("0.5");
-  beforeHomeRoom.add("10");
-  beforeHomeRoom.add("10");
+  beforeHomeRoom.add("15");
+  beforeHomeRoom.add("15");
   school.add(beforeHomeRoom);
 }
 

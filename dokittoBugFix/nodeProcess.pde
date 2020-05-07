@@ -4,7 +4,7 @@ ArrayList<Integer> baseNode = new ArrayList<Integer>();// x/y/phase(not used) / 
 ArrayList<Integer> firstNode = new ArrayList<Integer>();// x/y/takeDigree(4+3points) 16
 ArrayList<Integer> secondNode = new ArrayList<Integer>();// x/y/takeDigree(4+3points) 16
 
-float countMax =150;
+float countMax =250;
 int count = int(countMax/4);
 float countMaxN = countMax*1.5; //遷移用
 int countN =0;
@@ -21,15 +21,12 @@ boolean mouseOb=false;
 int nodeSet =0;
 int sanP=0;
 int loveP=0;
+int deSan = 5;//選択SAN減少
 
 
 void NodeProcess(ArrayList<String> nodes, int situ) {//+before info
 
-  if (!nextPro)image(pic[situ*3], 560, 0);
-  else {
-    image(pic[situ*3+baseNode.get(4)+1], 560, 0);
-  }
-  println(situ);
+  if (!nextPro)image(pic[situ*3], 560, 0);//選択画像表示
 
   if (!processOver) {//一回目は処理する
 
@@ -147,6 +144,8 @@ void NodeProcess(ArrayList<String> nodes, int situ) {//+before info
 
         if (temp<float(nodesA))baseNode.set(4, 0);//確立でノード決定
         else baseNode.set(4, 1);
+        
+        nextSituation=int(random(school.size()));//次のシチュエーション決定
 
         nodeSet = baseNode.get(4);
 
@@ -176,19 +175,26 @@ void NodeProcess(ArrayList<String> nodes, int situ) {//+before info
           love -= int(nodes.get(6));
           loveP = int(nodes.get(6));
         }
+        
+        
+        stacks.add(new NODES(processMemory.get(0),processMemory.get(1),baseNode.get(3),baseNode.get(4)));
+      
+        println(stacks.size());
       }
 
-      xC = int(xCollection*(countN/countMaxN))*2;
-      yC = int(yCollection*(countN/countMaxN))*2;
+      xC = int(xCollection*(countN/countMaxN)*2.4);
+      yC = int(yCollection*(countN/countMaxN)*2.4);
 
 
 
       processMemory.addAll(DrawArrow(dummy1 + xC, dummy2+ yC, processMemory.get(0)+ xC, processMemory.get(1)+ yC, 50, 70, countN));
       processMemory.subList(2, 18).clear();
+      
+      
     } else {
       bX= dummy1 + xC;
       bY=dummy2 + yC;
-      situation=-1;
+      situation=-1;/////////////////////////////////
       count = int(countMax/4);
       countN = 0;
       nodeAction=false;
@@ -226,15 +232,18 @@ void NodeProcess(ArrayList<String> nodes, int situ) {//+before info
     ellipse(baseNode.get(0) +xC, baseNode.get(1) +yC, 30*nodes.get(0).length(), 50);
     ellipse(firstNode.get(0) +xC, firstNode.get(1) +yC, 30*nodes.get(1).length(), 50);
     ellipse(secondNode.get(0) +xC, secondNode.get(1) +yC, 30*nodes.get(3).length(), 50);
+    ellipse(processMemory.get(0)*1.12 +xC, processMemory.get(1)*1.12 +yC, 30*school.get(nextSituation).get(0).length(), 50);
     fill(0);
     text(nodes.get(0), baseNode.get(0) +xC, baseNode.get(1) +yC);
     text(nodes.get(1), firstNode.get(0) +xC, firstNode.get(1)+yC);
     text(nodes.get(3), secondNode.get(0) +xC, secondNode.get(1)+yC);
+    text(school.get(nextSituation).get(0),processMemory.get(0)*1.12 +xC, processMemory.get(1)*1.12 +yC);
     textSize(40);
     fill(255);
     //text(nodes.get(2), (baseNode.get(0)+firstNode.get(0))/2 +xC, (baseNode.get(1)+firstNode.get(1))/2+yC);
     //text(nodes.get(4), (baseNode.get(0)+secondNode.get(0))/2 +xC, (baseNode.get(1)+secondNode.get(1))/2+yC);
     textSize(15);
+    image(pic[situ*3+baseNode.get(4)+1], 560, 0);//遷移中画像表示
 
     if (!check) {
       countN+=3;
@@ -247,7 +256,7 @@ void NodeProcess(ArrayList<String> nodes, int situ) {//+before info
     }
   }
 
-  if (mouseOb) {
+  if (mouseOb) {//確率変動
     if (firstNode.get(0)-100 < mouseX && mouseX<firstNode.get(0)+100 && firstNode.get(1)-200<mouseY && mouseY < firstNode.get(1)+50) {
       if (float(nodes.get(2))<1) {
         nodes.set(2, nf((float(nodes.get(2))+0.1), 1, 1));
@@ -263,7 +272,7 @@ void NodeProcess(ArrayList<String> nodes, int situ) {//+before info
         nodesA=nodes.get(2);
       }
     }
-    san -=5;//SAN値減少
+    san -=deSan;//SAN値減少
     mouseOb=false;
   }
 }
