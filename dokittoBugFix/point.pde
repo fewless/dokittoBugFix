@@ -1,10 +1,10 @@
 void Meter(){
   noStroke();
   fill(200);
-  rect(80,507,(width-80)*(love/100.0) + random(-1,1),35);
+  rect(80,507,(width-80)*(love/gMax) + random(-1,1),35);
   
   fill(150);
-  rect(80,472,(width-80)*(san/100.0) + random(-1,1),35);
+  rect(80,472,(width-80)*(san/gMax) + random(-1,1),35);
   
   
 }

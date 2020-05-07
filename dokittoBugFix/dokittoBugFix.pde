@@ -6,18 +6,17 @@ PGraphics mainUI;
 
 PImage sb;//speech bubble
 import java.util.List;
-int san = 100;
-int love = 50;
+float gMax =80;
+int san = 80;
+int love = 40;
 boolean op=true;
 boolean ending=false;
 
 ArrayList<ArrayList<String>> school = new ArrayList<ArrayList<String>>();
 boolean nodeAction = false;
 PImage pic[]= new PImage[15];
-PImage end;
-PImage opening;
-PImage end1;
-PImage end2;
+PImage opening,op1,op2;
+PImage end,end1,end2;
 
 void setup() {
   soundfile = new SoundFile(this, "ino.mp3");
@@ -39,40 +38,63 @@ void setup() {
   end1 = loadImage("end1.png");
   end2 = loadImage("end2.jpg");
   opening = loadImage("title.jpg");
+  op1 = loadImage("exp1.jpg");
+  op2 = loadImage("exp.jpg");
 }
 
 int situation=-1;
-
+int nextSituation = -1;
+int doneOp = 0;
+boolean endingIns=false;
 void draw() {
   background(205);
   if (op) {
     image(opening, 0, 0);
     text("click to start", 450, 450);
+  }else if(doneOp==0){
+    image(op1, 0, 0);
+  }else if(doneOp==1){
+    image(op2, 0, 0);
   } else if (san<=0) {
     ending=true;
     image(end, 0, 0);
-  } else if (100<=love) {
+    endingIns=true;
+  } else if (gMax<=love) {
     ending=true;
     image(end1, 0, 0);
+    endingIns=true;
   } else if (love<=0) {
     ending=true;
     image(end2, 0, 0);
+    endingIns=true;
   } else {
     tint( 255, 255);
     ellipse(0, 0, width*2.2*(count/countMax), height*2.2*(count/countMax));
-    if (situation == -1)situation=int(random(school.size()));//決まってなければ乱数決定
+    if(nextSituation != -1 && !nextPro)situation = nextSituation;//次が決まっていれば引っ張ってくる
+    else if (situation == -1)situation=int(random(school.size()));//決まってなければ乱数決定
+    
     NodeProcess(school.get(situation), situation);
     image(mainUI, 0, 0);
     //if(nodeAction)NodeCalc();
     Meter();
-    if (nextPro)pointProcess();
+    if (nextPro)pointProcess();  
     delay(10);
 
-    /*if (count >=countMax) {
+    if (count >=countMax) {
       Reset();
       nodeAction=true;
-    }*/
+    }
   }
+  if ((san<=0 || gMax<=love || love<=0)&& !endingIns) a = new PaperTurning(1,1);
+  
+  if(endingIns){
+    daw -=70; 
+    a.grip(1,1,daw);
+    background(255);
+    updatePixels(); 
+    println(daw);
+  }
+  
 }
 
 void mousePressed() {
@@ -80,12 +102,17 @@ void mousePressed() {
   if (op) {
     op=false;
     delay(200);
+    daw = width;
+  }else if (doneOp < 2) {
+    doneOp++;
+    delay(200);
   } else if (ending) {
     delay(300);
-    san = 100;
-    love = 50;
+    san = 80;
+    love = 40;
     op=true;
     ending=false;
+    endingIns = false;
   } else {
     if (!nodeAction) {
       //NextNode();
