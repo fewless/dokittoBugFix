@@ -1,4 +1,4 @@
-import processing.sound.*;
+ import processing.sound.*;
 SoundFile soundfile;
 SoundFile cheche;
 
@@ -51,19 +51,19 @@ void draw() {
   if (op) {
     image(opening, 0, 0);
     text("click to start", 450, 450);
-  }else if(doneOp==0){
+  }else if(doneOp==0){//操作説明　初回のみ
     image(op1, 0, 0);
   }else if(doneOp==1){
     image(op2, 0, 0);
-  } else if (san<=0) {
+  } else if (san<=0) {//SAN切れEND
     ending=true;
     image(end, 0, 0);
     endingIns=true;
-  } else if (gMax<=love) {
+  } else if (gMax<=love) {//恋しちゃったEND
     ending=true;
     image(end1, 0, 0);
     endingIns=true;
-  } else if (love<=0) {
+  } else if (love<=0) {//正規END
     ending=true;
     image(end2, 0, 0);
     endingIns=true;
@@ -92,7 +92,6 @@ void draw() {
     a.grip(1,1,daw);
     background(255);
     updatePixels(); 
-    println(daw);
   }
   
 }
@@ -100,6 +99,8 @@ void draw() {
 void mousePressed() {
 
   if (op) {
+    initProcess();
+    countN=0;
     op=false;
     delay(200);
     daw = width;
@@ -108,6 +109,7 @@ void mousePressed() {
     delay(200);
   } else if (ending) {
     delay(300);
+    initProcess();
     san = 80;
     love = 40;
     op=true;

@@ -23,6 +23,21 @@ int sanP=0;
 int loveP=0;
 int deSan = 5;//選択SAN減少
 
+void initProcess(){
+  countMax =250;
+  count = int(countMax/4);
+  countMaxN = countMax*1.5; 
+  countN =0;
+  nextPro=false;
+  xC=0;
+  yC=0;
+  situation=-1;
+  count = int(countMax/4);
+  nodeAction=false;
+  processOver=false;
+  nextPro=false;
+}
+
 
 void NodeProcess(ArrayList<String> nodes, int situ) {//+before info
 
@@ -178,8 +193,6 @@ void NodeProcess(ArrayList<String> nodes, int situ) {//+before info
         
         
         stacks.add(new NODES(processMemory.get(0),processMemory.get(1),baseNode.get(3),baseNode.get(4)));
-      
-        println(stacks.size());
       }
 
       xC = int(xCollection*(countN/countMaxN)*2.4);
